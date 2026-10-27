@@ -17,8 +17,21 @@ namespace MidtermExam.Prob04
         /// </remarks>
         public int AS04_SequentialSearch(int[] values, int target)
         {
-            // TODO: เขียนคำตอบแทนคำสั่ง throw ด้านล่าง
-            throw new NotImplementedException();
+            // O(n) เพราะกรณีที่ไม่พบ ต้องไล่ดูสมาชิกทุกตัว
+            if (values == null)
+            {
+                return -1;
+            }
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] == target)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         /// <summary>ข้อ 04.2: ค้นหาตัวเลขด้วย Binary Search โดยลดช่วงค้นหาประมาณครึ่งหนึ่งต่อขั้น</summary>
@@ -37,14 +50,34 @@ namespace MidtermExam.Prob04
         /// </remarks>
         public int AS05_BinarySearch(int[] sortedValues, int target)
         {
-            // TODO: เขียนคำตอบแทนคำสั่ง throw ด้านล่าง
-            // 1. จัดการ input ที่เป็น null/ว่าง และกำหนดขอบเขต index ของช่วงค้นหา
-            // 2. เลือก index ตรงกลางของช่วง แล้วเปรียบเทียบค่าตรงกลางกับ target
-            // 3. ถ้ายังไม่ตรง ให้เลือกค้นหาต่อเฉพาะครึ่งซ้ายหรือครึ่งขวาตามลำดับค่าที่เรียงไว้
-            //    ต้องตัดตำแหน่งที่ตรวจแล้วออก เพื่อให้ช่วงเล็กลงและไม่เกิดการวนซ้ำไม่จบ
-            // 4. ถ้าช่วงค้นหาหมดและยังไม่พบ ให้คืนค่าที่โจทย์กำหนดสำหรับกรณีไม่พบ
-            // ลองตรวจกรณีสมาชิกเดียว สองสมาชิก เป้าหมายอยู่หัว/ท้าย และเป้าหมายอยู่นอกช่วงค่า
-            throw new NotImplementedException();
+            // O(log n) เพราะตัดช่วงค้นหาออกประมาณครึ่งหนึ่งในแต่ละรอบ
+            if (sortedValues == null)
+            {
+                return -1;
+            }
+
+            int left = 0;
+            int right = sortedValues.Length - 1;
+
+            while (left <= right)
+            {
+                int middle = left + (right - left) / 2;
+
+                if (sortedValues[middle] == target)
+                {
+                    return middle;
+                }
+                else if (sortedValues[middle] < target)
+                {
+                    left = middle + 1;
+                }
+                else
+                {
+                    right = middle - 1;
+                }
+            }
+
+            return -1;
         }
     }
 }
